@@ -1,0 +1,73 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+{% load staticfiles %}
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/reset.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}"/>
+	<script src="{% static 'myapp/modernizr.js' %}"></script> <!-- Modernizr -->
+
+<title>Edit comment</title>
+
+
+    <header>
+        <nav class="cd-stretchy-nav">
+            <a class="cd-nav-trigger" href="#0">
+
+                <span aria-hidden="true"></span>
+            </a>
+
+            <ul>
+                <li><a href="{% url 'myapp:others' %}" class="active"><span>Department</span></a></li>
+
+
+                <!--{ %url 'myapp:otherscomment'% }  -->
+                <li><a href="{% url 'myapp:otherscomment' %}"><span>Edit Comment</span></a></li>
+                <li><a href="{% url 'myapp:Logout' %}"><span>Logout</span></a></li>
+            </ul>
+
+            <span aria-hidden="true" class="stretchy-nav-bg"></span>
+        </nav>
+    </header>
+
+
+
+<main class="cd-main-content">
+	<!-- main content here -->
+
+    <div class="studentList">
+
+        <form id="my_form" action="{% url 'myapp:successEditothers' %}" method="post" class="list" >
+            {% csrf_token %}
+
+            <h4>Student Details:</h4>
+            <h4>{{ student.name }}</h4>
+            <h4>{{ student.rollno }}</h4><br><br>
+
+            <label for="text1"> Edit your comment here</label>
+           <br><br>
+
+             {% load getattribute %}
+            {% load addstr %}
+            <input name="pkStud" type="hidden" value="{{ student.id }}">
+            <input name="column" type="hidden" value="{{ user }}">
+            {% with user|addstr:"C" as field %}
+                <textarea class="longInput" form="my_form" name="newComment" id="text1" cols="35" rows="7"  style="font-size:12pt;" >{{ student|getattribute:field }}
+              </textarea>
+            {% endwith %}
+
+            <br><br>
+                <div class="col-sm-offset-6 col-sm-1">
+                    <button type="submit" class="btn btn-success">Edit comment</button>
+                </div>
+        </form>
+    </div>
+
+
+</main>
+
+<script src="{% static 'myapp/main.js' %}"></script>

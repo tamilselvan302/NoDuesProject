@@ -1,0 +1,45 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'myapp/style2.css' %}"/>
+<br><br>
+<h1>No Dues Portal IITG</h1>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="col-lg-7 col-lg-offset-4  ">
+<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+               <span class="text-danger small">{{ field.errors }}</span>
+            </div>
+        </div>
+        <div class="colorSet" ><label class="control-label col-sm-2">{{ field.label_tag }}</label></div>
+        <label class="col-sm-8">{{ field }}</label>
+    {% endfor %}
+
+    <br><br><br><br>
+
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-10">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+
+</form>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+{% load staticfiles %}
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/reset.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}"/>
+	<script src="{% static 'myapp/modernizr.js' %}"></script> <!-- Modernizr -->
+
+<title>Choose</title>
+
+    <header>
+        <nav class="cd-stretchy-nav">
+            <a class="cd-nav-trigger" href="#0">
+
+                <span aria-hidden="true"></span>
+            </a>
+
+            <ul>
+                <li><a href="{% url 'myapp:index' %}" class="active"><span>Department</span></a></li>
+                {% ifnotequal hostel "NIL"%}
+                <li><a href="{% url 'myapp:hostel' %}"><span>{{ hostel }} Hostel</span></a></li>
+                {% endifnotequal %}
+                <li><a href="{% url 'myapp:comment' %}"><span>Edit Comment</span></a></li>
+                <li><a href="{% url 'myapp:Logout' %}"><span>Logout</span></a></li>
+            </ul>
+
+            <span aria-hidden="true" class="stretchy-nav-bg"></span>
+        </nav>
+    </header>
+
+
+
+<main class="cd-main-content">
+	<!-- main content here -->
+
+    <div class="studentList">
+        <h2>Hostel or Dept?</h2><br><br>
+
+        <form action="{% url 'myapp:comment' %}" method="post" class="list" >
+            {% csrf_token %}
+
+            <div class="select-style">
+              <select name="choose">
+                <option value="dept">Department</option>
+                {% ifequal hostel "NIL" %}
+                    <option disabled >Hostel(NA)</option>
+                {% endifequal %}
+                {% ifnotequal hostel "NIL" %}
+                    <option value="host" >Hostel {{ hostel }}</option>
+                {% endifnotequal %}
+              </select>
+            </div>
+
+            <br><br>
+                <div class="col-sm-offset-2 col-sm-1">
+                    <button type="submit" name="action" value="ch" class="btn btn-success">Edit</button>
+                </div>
+        </form>
+    </div>
+
+
+</main>
+
+<script src="{% static 'myapp/main.js' %}"></script>

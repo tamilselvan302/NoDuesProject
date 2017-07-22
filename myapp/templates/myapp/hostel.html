@@ -1,0 +1,104 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+{% load staticfiles %}
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/reset.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}"/>
+	<script src="{% static 'myapp/modernizr.js' %}"></script> <!-- Modernizr -->
+
+<title>Hostel List</title>
+
+    <header>
+        <nav class="cd-stretchy-nav">
+            <a class="cd-nav-trigger" href="#0">
+
+                <span aria-hidden="true"></span>
+            </a>
+
+            <ul>
+                <li><a href="{% url 'myapp:index' %}" class="active"><span>Department</span></a></li>
+                {% ifnotequal hostel "NIL"%}
+                <li><a href="{% url 'myapp:hostel' %}"><span>{{ hostel }} Hostel</span></a></li>
+                {% endifnotequal %}
+                <li><a href="{% url 'myapp:comment' %}"><span>Edit Comment</span></a></li>
+                <li><a href="{% url 'myapp:Logout' %}"><span>Logout</span></a></li>
+            </ul>
+
+            <span aria-hidden="true" class="stretchy-nav-bg"></span>
+        </nav>
+    </header>
+
+
+
+
+<main class="cd-main-content">
+	<!-- main content here -->
+
+    <div class="studentList">
+        <h2>Welcome {{ nameDisplay }}</h2><br><br>
+        <h3>Hostel {{ hostel }} Students</h3>
+
+        <form action="" method="post" class="list" >
+            {% csrf_token %}
+
+
+
+            <table id="acrylic">
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Student</th>
+                <th>Comments</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student  in studList %}
+                {% load getattribute %}
+                {% load addstr %}
+                {% if student|getattribute:user %}
+                    <tr>
+                        <td align="center" style="vertical-align:middle;"><input type="checkbox" value="{{ student.webmail }}" name="selectList"></td>
+                        <td align="center" style="vertical-align:middle;">{{ student.name }}</td>
+                        {% with user|addstr:"C" as field %}
+                        <td>
+                            <textarea readonly class="longInput" cols="35" rows="7"  style="font-size:12pt;" >{{ student|getattribute:field }}
+                        </textarea>
+                        </td>
+                        {% endwith %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            </tbody>
+            </table>
+            <input type="checkbox" name="temporary" onClick="toggle(this)" /> Toggle All<br/>
+            <br><br>
+                <div class="col-sm-offset-2 col-sm-8">
+                    <button type="submit" class="btn btn-success">Clear Dues</button>
+                </div>
+        </form>
+        <br><br><br><br><br><br><br><br><br><br>
+        Copyrights reserved
+    </div>
+
+</main>
+
+<script src="{% static 'myapp/main.js' %}"></script>
+
+
+<script language="JavaScript">
+function toggle(source) {
+  checkboxes = document.getElementsByName('selectList');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>
+
+
+
